@@ -1,0 +1,112 @@
+import re
+import math
+from json import loads
+#take inputs
+str_mat=input()
+lst=loads(str_mat)
+command = input()
+class Node:
+ 
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None 
+#  front stores the first node of LL and rear stores the last node of LL
+class Queue:
+ 
+    def __init__(self):
+        self.front = self.rear = None
+        self.dequeSize=0
+ 
+    def isEmpty(self):
+        return self.front == None
+#Method to add item at the beginning of  to the deque 
+    def enQueue(self, item):
+  
+        temp = Node(item)
+        if self.rear == None:
+            self.front = self.rear = temp
+            return
+        temp.next=self.front
+        self.front=temp
+             
+#Method to add item at the end of  to the deque   
+    def EnQueue(self, item):
+       
+        temp = Node(item)
+
+        if self.rear == None:
+            self.front = self.rear = temp
+            self.dequeSize=self.dequeSize+1
+            return
+        self.rear.next = temp
+        self.rear = temp
+        
+#find size of queue
+    def length(self):
+        current = self.front
+        length = 0
+        while current:
+            length = length + 1
+            current = current.next
+        return length
+    
+#Method to remove item at the end of  to the deque     
+    def deleteFromRear(self):
+        
+            if self.dequeSize==0:
+                print("Error")
+                exit()
+            else:
+                curr=self.front
+                prev=None
+                while curr.next!=None:
+                    prev=curr
+                    curr=curr.next
+                prev.next=curr.next
+                self.dequeSize=self.dequeSize-1
+                del curr
+        
+            
+#print in array format
+    def __str__(self):
+        res = ""       
+        # initializing ptr to front
+        ptr = self.front        
+        while ptr:
+            res += str(ptr.data) + ", "
+            ptr = ptr.next
+        res = res.strip(", ")
+        if len(res):
+            return "[" + res + "]"
+        else:
+            return "[]"
+        
+        
+if __name__ == '__main__':
+    LL1= Queue()
+    for i in range(len(lst)):
+        LL1.EnQueue(lst[i])
+
+if command =="enqueue":
+    element=input()
+    LL1.enQueue(element)
+
+    print(LL1)
+
+elif command =="dequeue":
+    if LL1.length()==1:
+        print("[]")      
+    else:
+        LL1.deleteFromRear()
+        print(LL1)
+
+elif(command =="isEmpty"):
+    if LL1.length()==0:
+        print("True")
+    else:
+        print("False") 
+
+elif(command =="size"):
+
+    print(LL1.length())
