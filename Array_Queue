@@ -1,0 +1,98 @@
+class Queue:
+
+    
+    def __init__(self, c):
+
+        self.queue = []
+        self.front = self.rear = 0
+        self.capacity = c
+
+    
+    def queueEnqueue(self, data):
+
+        # Check queue is full or not
+        if(self.capacity == self.rear):
+            print("Error")
+            exit()
+
+        # Insert element at the rear
+        else:
+            self.queue.append(data)
+            self.rear += 1
+
+    # Function to delete an element
+    # from the front of the queue
+    def queueDequeue(self):
+
+        # If queue is empty
+        if(self.front == self.rear):
+            print("Error")
+            exit()
+
+        # Pop the front element from list
+        else:
+            x = self.queue.pop(0)
+            self.rear -= 1
+
+    def IsEmpty(self):
+        if(len(self.queue) > 0):
+            print("False")
+            exit()
+        else:
+            print("True")
+            exit()
+
+    def Size (self):
+        size = len(self.queue)
+        return size
+    
+    def PrintQueue(self):
+        res = self.queue
+        res.reverse()
+        return res
+
+
+    
+def inarray(n):
+    L = len(n)  
+    if(n =="[]"):
+        arr=[]
+    else:    
+        new = n[1:L-1:]  #convert the input in form 5, 2, 6,....
+        arr = new.split(",")
+        arr = [int(i) for i in arr ]
+    return arr
+
+
+
+n = input()
+mode = input()
+arr = inarray(n)
+arr.reverse()
+Q = Queue(len(arr))
+for i in range (0, len(arr)):
+    Q.queueEnqueue(arr[i])
+
+
+if(mode == "enqueue"):
+    val = int(input())
+    Q = Queue(len(arr)+1)
+    for i in range (0, len(arr)):
+        Q.queueEnqueue(arr[i])
+    Q.queueEnqueue(val)
+    print(Q.PrintQueue())
+    exit()
+
+elif(mode == "dequeue"):
+    Q.queueDequeue()
+    print(Q.PrintQueue())
+    exit()
+
+elif(mode == "isEmpty"):
+    Q.IsEmpty()
+
+elif(mode == "size"):
+    print(Q.Size())
+    exit()
+else:
+    print("Error")
